@@ -22,11 +22,14 @@ object Main extends App {
           print(s"  $name ")
 
           args match {
-            case List("pk")         =>
-              if (typ.toUpperCase == "INTEGER" || typ.toUpperCase == "BIGINT")
-                print("SERIAL PRIMARY KEY")
-              else
-                print("PRIMARY KEY")
+            case List("pk") =>
+              typ.toUpperCase match {
+                case "INTEGER" => print("SERIAL")
+                case "BIGINT"  => print("BIGSERIAL")
+                case t         => print(t)
+              }
+
+              print(" PRIMARY KEY")
             case List("fk", ft, fc) => print(s"${typ toUpperCase} REFERENCES $ft ($fc)")
             case _                  => print(typ toUpperCase)
           }
